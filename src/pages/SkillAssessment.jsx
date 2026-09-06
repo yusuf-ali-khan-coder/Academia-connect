@@ -108,7 +108,7 @@ const SkillAssessment = () => {
                   alignItems: 'center',
                   gap: '1rem',
                   padding: '1rem 1.25rem',
-                  background: answers[question.id] === idx ? 'rgba(30, 58, 138, 0.15)' : 'var(--bg-tertiary)',
+                  background: answers[question.id] === idx ? 'rgba(11, 31, 58, 0.15)' : 'var(--bg-tertiary)',
                   border: `2px solid ${answers[question.id] === idx ? 'var(--primary)' : 'var(--border)'}`,
                   borderRadius: 'var(--radius-lg)',
                   cursor: 'pointer',

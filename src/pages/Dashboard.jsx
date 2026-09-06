@@ -87,14 +87,14 @@ const StudentDashboardView = ({ user }) => {
           <div className="chart-container">
             <ResponsiveContainer width="100%" height="100%">
               <BarChart data={skillData}>
-                <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" />
+                <CartesianGrid strokeDasharray="3 3" stroke="#D9E2EC" />
                 <XAxis dataKey="name" stroke="#475569" fontSize={12} />
                 <YAxis stroke="#475569" fontSize={12} />
                 <Tooltip 
-                  contentStyle={{ background: '#ffffff', border: '1px solid #e2e8f0', borderRadius: '8px' }}
-                  labelStyle={{ color: '#0f172a' }}
+                  contentStyle={{ background: '#FFFFFF', border: '1px solid #D9E2EC', borderRadius: '8px' }}
+                  labelStyle={{ color: '#0B1F3A' }}
                 />
-                <Bar dataKey="score" fill="#1e3a8a" radius={[4, 4, 0, 0]} />
+                <Bar dataKey="score" fill="#0B1F3A" radius={[4, 4, 0, 0]} />
               </BarChart>
             </ResponsiveContainer>
           </div>
@@ -110,14 +110,14 @@ const StudentDashboardView = ({ user }) => {
           <div className="chart-container">
             <ResponsiveContainer width="100%" height="100%">
               <AreaChart data={matchData}>
-                <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" />
+                <CartesianGrid strokeDasharray="3 3" stroke="#D9E2EC" />
                 <XAxis dataKey="name" stroke="#475569" fontSize={12} />
                 <YAxis stroke="#475569" fontSize={12} />
                 <Tooltip 
-                  contentStyle={{ background: '#ffffff', border: '1px solid #e2e8f0', borderRadius: '8px' }}
-                  labelStyle={{ color: '#0f172a' }}
+                  contentStyle={{ background: '#FFFFFF', border: '1px solid #D9E2EC', borderRadius: '8px' }}
+                  labelStyle={{ color: '#0B1F3A' }}
                 />
-                <Area type="monotone" dataKey="score" stroke="#6366f1" fill="rgba(99, 102, 241, 0.2)" />
+                <Area type="monotone" dataKey="score" stroke="#1D4ED8" fill="rgba(29, 78, 216, 0.2)" />
               </AreaChart>
             </ResponsiveContainer>
           </div>
@@ -229,11 +229,11 @@ const IndustryDashboardView = () => {
           <div className="chart-container">
             <ResponsiveContainer width="100%" height="100%">
               <BarChart data={applicantData}>
-                <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" />
+                <CartesianGrid strokeDasharray="3 3" stroke="#D9E2EC" />
                 <XAxis dataKey="month" stroke="#475569" />
                 <YAxis stroke="#475569" />
-                <Tooltip contentStyle={{ background: '#ffffff', border: '1px solid #e2e8f0', borderRadius: '8px' }} />
-                <Bar dataKey="applicants" fill="#6366f1" radius={[4, 4, 0, 0]} />
+                <Tooltip contentStyle={{ background: '#FFFFFF', border: '1px solid #D9E2EC', borderRadius: '8px' }} />
+                <Bar dataKey="applicants" fill="#1D4ED8" radius={[4, 4, 0, 0]} />
               </BarChart>
             </ResponsiveContainer>
           </div>
@@ -246,11 +246,11 @@ const IndustryDashboardView = () => {
           <div className="chart-container">
             <ResponsiveContainer width="100%" height="100%">
               <BarChart data={talentData} layout="vertical">
-                <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" />
+                <CartesianGrid strokeDasharray="3 3" stroke="#D9E2EC" />
                 <XAxis type="number" stroke="#475569" />
                 <YAxis type="category" dataKey="name" stroke="#475569" />
-                <Tooltip contentStyle={{ background: '#ffffff', border: '1px solid #e2e8f0', borderRadius: '8px' }} />
-                <Bar dataKey="talent" fill="#10b981" radius={[0, 4, 4, 0]} />
+                <Tooltip contentStyle={{ background: '#FFFFFF', border: '1px solid #D9E2EC', borderRadius: '8px' }} />
+                <Bar dataKey="talent" fill="#16A34A" radius={[0, 4, 4, 0]} />
               </BarChart>
             </ResponsiveContainer>
           </div>
@@ -269,7 +269,7 @@ const InstitutionDashboardView = () => {
     { month: 'Sep', placed: 95 },
   ]
 
-  const COLORS = ['#1e3a8a', '#6366f1', '#10b981', '#f59e0b', '#ef4444']
+  const COLORS = ['#0B1F3A', '#1D4ED8', '#16A34A', '#F59E0B', '#DC2626']
 
   return (
     <div className="page-content fade-in">
@@ -326,11 +326,11 @@ const InstitutionDashboardView = () => {
           <div className="chart-container">
             <ResponsiveContainer width="100%" height="100%">
               <BarChart data={data.industryDemand} layout="vertical">
-                <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" />
+                <CartesianGrid strokeDasharray="3 3" stroke="#D9E2EC" />
                 <XAxis type="number" stroke="#475569" />
                 <YAxis type="category" dataKey="skill" stroke="#475569" />
-                <Tooltip contentStyle={{ background: '#ffffff', border: '1px solid #e2e8f0', borderRadius: '8px' }} />
-                <Bar dataKey="demand" fill="#1e3a8a" radius={[0, 4, 4, 0]} />
+                <Tooltip contentStyle={{ background: '#FFFFFF', border: '1px solid #D9E2EC', borderRadius: '8px' }} />
+                <Bar dataKey="demand" fill="#0B1F3A" radius={[0, 4, 4, 0]} />
               </BarChart>
             </ResponsiveContainer>
           </div>
