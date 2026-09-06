@@ -71,7 +71,7 @@ const CareerAnalysis = () => {
         </select>
       </div>
 
-      <div className="card" style={{ marginBottom: '1.5rem', background: 'linear-gradient(135deg, rgba(11, 31, 58, 0.1), rgba(29, 78, 216, 0.1))' }}>
+      <div className="card" style={{ marginBottom: '1.5rem', background: 'linear-gradient(135deg, rgba(51, 46, 40, 0.1), rgba(232, 220, 200, 0.1))' }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: '2rem' }}>
           <div style={{ flex: 1 }}>
             <h3 style={{ fontSize: '1.25rem', fontWeight: 700, marginBottom: '0.5rem' }}>{careerData.title}</h3>
@@ -96,11 +96,11 @@ const CareerAnalysis = () => {
           <div style={{ width: '300px', height: '200px' }}>
             <ResponsiveContainer width="100%" height="100%">
               <RadarChart data={radarData}>
-                <PolarGrid stroke="#D9E2EC" />
-                <PolarAngleAxis dataKey="skill" stroke="#475569" fontSize={11} />
-                <PolarRadiusAxis stroke="#D9E2EC" fontSize={10} />
-                <Radar name="Required" dataKey="required" stroke="#DC2626" fill="rgba(220, 38, 38, 0.1)" />
-                <Radar name="Your Level" dataKey="current" stroke="#16A34A" fill="rgba(22, 163, 74, 0.2)" />
+                <PolarGrid stroke="#E5DDD1" />
+                <PolarAngleAxis dataKey="skill" stroke="#6B6258" fontSize={11} />
+                <PolarRadiusAxis stroke="#E5DDD1" fontSize={10} />
+                <Radar name="Required" dataKey="required" stroke="#A85448" fill="rgba(168, 84, 72, 0.1)" />
+                <Radar name="Your Level" dataKey="current" stroke="#4F7A5A" fill="rgba(79, 122, 90, 0.2)" />
                 <Legend />
               </RadarChart>
             </ResponsiveContainer>

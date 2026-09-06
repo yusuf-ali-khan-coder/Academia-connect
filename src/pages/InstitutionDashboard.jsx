@@ -6,7 +6,7 @@ const InstitutionDashboard = () => {
   const data = institutionData
   const [activeTab, setActiveTab] = useState('overview')
 
-  const COLORS = ['#0B1F3A', '#1D4ED8', '#16A34A', '#F59E0B', '#DC2626']
+  const COLORS = ['#332E28', '#E8DCC8', '#4F7A5A', '#B8863B', '#A85448']
 
   const departmentData = [
     { name: 'Computer Science', placed: 280, total: 400 },
@@ -92,7 +92,7 @@ const InstitutionDashboard = () => {
                       <Cell key={`cell-${index}`} fill={COLORS[index]} />
                     ))}
                   </Pie>
-                  <Tooltip contentStyle={{ background: '#FFFFFF', border: '1px solid #D9E2EC', borderRadius: '8px' }} />
+                  <Tooltip contentStyle={{ background: '#FFFFFF', border: '1px solid #E5DDD1', borderRadius: '8px' }} />
                   <Legend />
                 </PieChart>
               </ResponsiveContainer>
@@ -106,13 +106,13 @@ const InstitutionDashboard = () => {
             <div className="chart-container">
               <ResponsiveContainer width="100%" height="100%">
                 <BarChart data={departmentData}>
-                  <CartesianGrid strokeDasharray="3 3" stroke="#D9E2EC" />
-                  <XAxis dataKey="name" stroke="#475569" fontSize={11} />
-                  <YAxis stroke="#475569" />
-                  <Tooltip contentStyle={{ background: '#FFFFFF', border: '1px solid #D9E2EC', borderRadius: '8px' }} />
+                  <CartesianGrid strokeDasharray="3 3" stroke="#E5DDD1" />
+                  <XAxis dataKey="name" stroke="#6B6258" fontSize={11} />
+                  <YAxis stroke="#6B6258" />
+                  <Tooltip contentStyle={{ background: '#FFFFFF', border: '1px solid #E5DDD1', borderRadius: '8px' }} />
                   <Legend />
-                  <Bar dataKey="placed" fill="#16A34A" name="Placed" radius={[4, 4, 0, 0]} />
-                  <Bar dataKey="total" fill="#0B1F3A" name="Total" radius={[4, 4, 0, 0]} />
+                  <Bar dataKey="placed" fill="#4F7A5A" name="Placed" radius={[4, 4, 0, 0]} />
+                  <Bar dataKey="total" fill="#332E28" name="Total" radius={[4, 4, 0, 0]} />
                 </BarChart>
               </ResponsiveContainer>
             </div>
@@ -152,14 +152,14 @@ const InstitutionDashboard = () => {
             <div className="chart-container">
               <ResponsiveContainer width="100%" height="100%">
                 <LineChart data={skillDemandTrend}>
-                  <CartesianGrid strokeDasharray="3 3" stroke="#D9E2EC" />
-                  <XAxis dataKey="month" stroke="#475569" />
-                  <YAxis stroke="#475569" />
-                  <Tooltip contentStyle={{ background: '#FFFFFF', border: '1px solid #D9E2EC', borderRadius: '8px' }} />
+                  <CartesianGrid strokeDasharray="3 3" stroke="#E5DDD1" />
+                  <XAxis dataKey="month" stroke="#6B6258" />
+                  <YAxis stroke="#6B6258" />
+                  <Tooltip contentStyle={{ background: '#FFFFFF', border: '1px solid #E5DDD1', borderRadius: '8px' }} />
                   <Legend />
-                  <Line type="monotone" dataKey="python" stroke="#0B1F3A" strokeWidth={2} name="Python" />
-                  <Line type="monotone" dataKey="sql" stroke="#1D4ED8" strokeWidth={2} name="SQL" />
-                  <Line type="monotone" dataKey="react" stroke="#16A34A" strokeWidth={2} name="React" />
+                  <Line type="monotone" dataKey="python" stroke="#332E28" strokeWidth={2} name="Python" />
+                  <Line type="monotone" dataKey="sql" stroke="#E8DCC8" strokeWidth={2} name="SQL" />
+                  <Line type="monotone" dataKey="react" stroke="#4F7A5A" strokeWidth={2} name="React" />
                 </LineChart>
               </ResponsiveContainer>
             </div>

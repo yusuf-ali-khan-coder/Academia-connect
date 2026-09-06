@@ -87,14 +87,14 @@ const StudentDashboardView = ({ user }) => {
           <div className="chart-container">
             <ResponsiveContainer width="100%" height="100%">
               <BarChart data={skillData}>
-                <CartesianGrid strokeDasharray="3 3" stroke="#D9E2EC" />
-                <XAxis dataKey="name" stroke="#475569" fontSize={12} />
-                <YAxis stroke="#475569" fontSize={12} />
+                <CartesianGrid strokeDasharray="3 3" stroke="#E5DDD1" />
+                <XAxis dataKey="name" stroke="#6B6258" fontSize={12} />
+                <YAxis stroke="#6B6258" fontSize={12} />
                 <Tooltip 
-                  contentStyle={{ background: '#FFFFFF', border: '1px solid #D9E2EC', borderRadius: '8px' }}
-                  labelStyle={{ color: '#0B1F3A' }}
+                  contentStyle={{ background: '#FFFFFF', border: '1px solid #E5DDD1', borderRadius: '8px' }}
+                  labelStyle={{ color: '#332E28' }}
                 />
-                <Bar dataKey="score" fill="#0B1F3A" radius={[4, 4, 0, 0]} />
+                <Bar dataKey="score" fill="#332E28" radius={[4, 4, 0, 0]} />
               </BarChart>
             </ResponsiveContainer>
           </div>
@@ -110,14 +110,14 @@ const StudentDashboardView = ({ user }) => {
           <div className="chart-container">
             <ResponsiveContainer width="100%" height="100%">
               <AreaChart data={matchData}>
-                <CartesianGrid strokeDasharray="3 3" stroke="#D9E2EC" />
-                <XAxis dataKey="name" stroke="#475569" fontSize={12} />
-                <YAxis stroke="#475569" fontSize={12} />
+                <CartesianGrid strokeDasharray="3 3" stroke="#E5DDD1" />
+                <XAxis dataKey="name" stroke="#6B6258" fontSize={12} />
+                <YAxis stroke="#6B6258" fontSize={12} />
                 <Tooltip 
-                  contentStyle={{ background: '#FFFFFF', border: '1px solid #D9E2EC', borderRadius: '8px' }}
-                  labelStyle={{ color: '#0B1F3A' }}
+                  contentStyle={{ background: '#FFFFFF', border: '1px solid #E5DDD1', borderRadius: '8px' }}
+                  labelStyle={{ color: '#332E28' }}
                 />
-                <Area type="monotone" dataKey="score" stroke="#1D4ED8" fill="rgba(29, 78, 216, 0.2)" />
+                <Area type="monotone" dataKey="score" stroke="#E8DCC8" fill="rgba(232, 220, 200, 0.2)" />
               </AreaChart>
             </ResponsiveContainer>
           </div>
@@ -229,11 +229,11 @@ const IndustryDashboardView = () => {
           <div className="chart-container">
             <ResponsiveContainer width="100%" height="100%">
               <BarChart data={applicantData}>
-                <CartesianGrid strokeDasharray="3 3" stroke="#D9E2EC" />
-                <XAxis dataKey="month" stroke="#475569" />
-                <YAxis stroke="#475569" />
-                <Tooltip contentStyle={{ background: '#FFFFFF', border: '1px solid #D9E2EC', borderRadius: '8px' }} />
-                <Bar dataKey="applicants" fill="#1D4ED8" radius={[4, 4, 0, 0]} />
+                <CartesianGrid strokeDasharray="3 3" stroke="#E5DDD1" />
+                <XAxis dataKey="month" stroke="#6B6258" />
+                <YAxis stroke="#6B6258" />
+                <Tooltip contentStyle={{ background: '#FFFFFF', border: '1px solid #E5DDD1', borderRadius: '8px' }} />
+                <Bar dataKey="applicants" fill="#E8DCC8" radius={[4, 4, 0, 0]} />
               </BarChart>
             </ResponsiveContainer>
           </div>
@@ -246,11 +246,11 @@ const IndustryDashboardView = () => {
           <div className="chart-container">
             <ResponsiveContainer width="100%" height="100%">
               <BarChart data={talentData} layout="vertical">
-                <CartesianGrid strokeDasharray="3 3" stroke="#D9E2EC" />
-                <XAxis type="number" stroke="#475569" />
-                <YAxis type="category" dataKey="name" stroke="#475569" />
-                <Tooltip contentStyle={{ background: '#FFFFFF', border: '1px solid #D9E2EC', borderRadius: '8px' }} />
-                <Bar dataKey="talent" fill="#16A34A" radius={[0, 4, 4, 0]} />
+                <CartesianGrid strokeDasharray="3 3" stroke="#E5DDD1" />
+                <XAxis type="number" stroke="#6B6258" />
+                <YAxis type="category" dataKey="name" stroke="#6B6258" />
+                <Tooltip contentStyle={{ background: '#FFFFFF', border: '1px solid #E5DDD1', borderRadius: '8px' }} />
+                <Bar dataKey="talent" fill="#4F7A5A" radius={[0, 4, 4, 0]} />
               </BarChart>
             </ResponsiveContainer>
           </div>
@@ -269,7 +269,7 @@ const InstitutionDashboardView = () => {
     { month: 'Sep', placed: 95 },
   ]
 
-  const COLORS = ['#0B1F3A', '#1D4ED8', '#16A34A', '#F59E0B', '#DC2626']
+  const COLORS = ['#332E28', '#E8DCC8', '#4F7A5A', '#B8863B', '#A85448']
 
   return (
     <div className="page-content fade-in">
@@ -326,11 +326,11 @@ const InstitutionDashboardView = () => {
           <div className="chart-container">
             <ResponsiveContainer width="100%" height="100%">
               <BarChart data={data.industryDemand} layout="vertical">
-                <CartesianGrid strokeDasharray="3 3" stroke="#D9E2EC" />
-                <XAxis type="number" stroke="#475569" />
-                <YAxis type="category" dataKey="skill" stroke="#475569" />
-                <Tooltip contentStyle={{ background: '#FFFFFF', border: '1px solid #D9E2EC', borderRadius: '8px' }} />
-                <Bar dataKey="demand" fill="#0B1F3A" radius={[0, 4, 4, 0]} />
+                <CartesianGrid strokeDasharray="3 3" stroke="#E5DDD1" />
+                <XAxis type="number" stroke="#6B6258" />
+                <YAxis type="category" dataKey="skill" stroke="#6B6258" />
+                <Tooltip contentStyle={{ background: '#FFFFFF', border: '1px solid #E5DDD1', borderRadius: '8px' }} />
+                <Bar dataKey="demand" fill="#332E28" radius={[0, 4, 4, 0]} />
               </BarChart>
             </ResponsiveContainer>
           </div>
