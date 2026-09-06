@@ -1,20 +1,20 @@
-import { useState, createContext, useContext } from 'react'
+import { useState, createContext, useContext, lazy, Suspense } from 'react'
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom'
 import { AuthProvider, useAuth } from './contexts/AuthContext'
-import LoginPage from './pages/LoginPage'
-import Dashboard from './pages/Dashboard'
-import Profile from './pages/Profile'
-import SkillAssessment from './pages/SkillAssessment'
-import CareerAnalysis from './pages/CareerAnalysis'
-import Opportunities from './pages/Opportunities'
-import Portfolio from './pages/Portfolio'
-import Applications from './pages/Applications'
-import InstitutionDashboard from './pages/InstitutionDashboard'
-import Collaboration from './pages/Collaboration'
 import Sidebar from './components/Sidebar'
 import TopBar from './components/TopBar'
-
 import { students } from './data/mockData'
+
+const LoginPage = lazy(() => import('./pages/LoginPage'))
+const Dashboard = lazy(() => import('./pages/Dashboard'))
+const Profile = lazy(() => import('./pages/Profile'))
+const SkillAssessment = lazy(() => import('./pages/SkillAssessment'))
+const CareerAnalysis = lazy(() => import('./pages/CareerAnalysis'))
+const Opportunities = lazy(() => import('./pages/Opportunities'))
+const Portfolio = lazy(() => import('./pages/Portfolio'))
+const Applications = lazy(() => import('./pages/Applications'))
+const InstitutionDashboard = lazy(() => import('./pages/InstitutionDashboard'))
+const Collaboration = lazy(() => import('./pages/Collaboration'))
 
 export const AppContext = createContext()
 export const useApp = () => useContext(AppContext)
@@ -52,10 +52,17 @@ function formatUser(authUser) {
 
 function ProtectedRoute({ children }) {
   const { user, loading } = useAuth()
-  if (loading) return <div className="loading-state" style={{ height: '100vh' }}><div className="spinner"></div><p style={{ marginTop: '1rem', color: 'var(--text-muted)' }}>Loading...</p></div>
+  if (loading) return <div className="loading-state" style={{ height: '100vh' }}><div className="spinner"></div><p style={{ marginTop: '1rem', color: 'var(--text-muted)' }}>Loading session...</p></div>
   if (!user) return <Navigate to="/login" replace />
   return children
 }
+
+const LoadingFallback = () => (
+  <div className="loading-state" style={{ height: '100vh', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
+    <div className="spinner"></div>
+    <p style={{ marginTop: '1rem', color: 'var(--text-muted)' }}>Loading page...</p>
+  </div>
+)
 
 function AppRoutes() {
   const { user, loading } = useAuth()
@@ -68,7 +75,7 @@ function AppRoutes() {
     setUserOverrides({})
   }
 
-  if (loading) return <div className="loading-state" style={{ height: '100vh' }}><div className="spinner"></div><p style={{ marginTop: '1rem', color: 'var(--text-muted)' }}>Loading...</p></div>
+  if (loading) return <LoadingFallback />
 
   const baseUser = formatUser(user)
   const currentUser = baseUser ? { ...baseUser, ...userOverrides } : null
@@ -83,30 +90,34 @@ function AppRoutes() {
 
   return (
     <AppContext.Provider value={{ userRole: user?.role, currentUser, setCurrentUser, currentPage, setCurrentPage }}>
-      <Routes>
-        <Route path="/login" element={user ? <Navigate to="/" replace /> : <LoginPage />} />
-        <Route path="/*" element={
-          <ProtectedRoute>
-            <div className="app-container">
-              <Sidebar />
-              <div className="main-content">
-                <TopBar />
-                <Routes>
-                  <Route path="/" element={<Dashboard />} />
-                  <Route path="/profile" element={<Profile />} />
-                  <Route path="/assessment" element={<SkillAssessment />} />
-                  <Route path="/career-analysis" element={<CareerAnalysis />} />
-                  <Route path="/opportunities" element={<Opportunities />} />
-                  <Route path="/portfolio" element={<Portfolio />} />
-                  <Route path="/applications" element={<Applications />} />
-                  <Route path="/institution" element={<InstitutionDashboard />} />
-                  <Route path="/collaboration" element={<Collaboration />} />
-                </Routes>
+      <Suspense fallback={<LoadingFallback />}>
+        <Routes>
+          <Route path="/login" element={user ? <Navigate to="/" replace /> : <LoginPage />} />
+          <Route path="/*" element={
+            <ProtectedRoute>
+              <div className="app-container">
+                <Sidebar />
+                <div className="main-content">
+                  <TopBar />
+                  <Suspense fallback={<LoadingFallback />}>
+                    <Routes>
+                      <Route path="/" element={<Dashboard />} />
+                      <Route path="/profile" element={<Profile />} />
+                      <Route path="/assessment" element={<SkillAssessment />} />
+                      <Route path="/career-analysis" element={<CareerAnalysis />} />
+                      <Route path="/opportunities" element={<Opportunities />} />
+                      <Route path="/portfolio" element={<Portfolio />} />
+                      <Route path="/applications" element={<Applications />} />
+                      <Route path="/institution" element={<InstitutionDashboard />} />
+                      <Route path="/collaboration" element={<Collaboration />} />
+                    </Routes>
+                  </Suspense>
+                </div>
               </div>
-            </div>
-          </ProtectedRoute>
-        } />
-      </Routes>
+            </ProtectedRoute>
+          } />
+        </Routes>
+      </Suspense>
     </AppContext.Provider>
   )
 }
