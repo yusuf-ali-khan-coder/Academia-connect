@@ -142,7 +142,7 @@ const Applications = () => {
                   width: '48px', 
                   height: '48px', 
                   borderRadius: 'var(--radius-lg)',
-                  background: 'rgba(51, 46, 40, 0.15)',
+                  background: 'rgba(99, 102, 241, 0.15)',
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
