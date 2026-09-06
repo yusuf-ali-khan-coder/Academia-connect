@@ -1,0 +1,311 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+enum Role {
+  student
+  faculty
+  industry
+  institution
+}
+
+enum OpportunityType {
+  internship
+  job
+  apprenticeship
+  project
+}
+
+enum ApplicationStatus {
+  pending
+  reviewed
+  shortlisted
+  interview
+  rejected
+  accepted
+}
+
+enum DocumentType {
+  resume
+  certificate
+  report
+  academic
+  other
+}
+
+enum EventType {
+  lecture
+  workshop
+  mentorship
+  project
+  challenge
+}
+
+enum EventMode {
+  online
+  hybrid
+  oncampus
+}
+
+enum ChallengeStatus {
+  live
+  upcoming
+  ended
+}
+
+enum ProgramType {
+  certification
+  training
+  workshop
+  mentorship
+}
+
+enum FDPStatus {
+  upcoming
+  ongoing
+  completed
+}
+
+model User {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  password  String
+  name      String
+  avatar    String?
+  role      Role
+  dept      String?
+  university String?
+  company   String?
+  year      String?
+  cgpa      String?
+  phone     String?
+  bio       String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  skills          UserSkill[]
+  assessments     Assessment[]
+  applications    Application[]
+  documents       Document[]
+  events          CollabEvent[]           @relation("EventHost")
+  eventRegistrations EventRegistration[]
+  opportunities   Opportunity[]          @relation("OppCreator")
+  learningPrograms LearningProgram[]     @relation("ProgramCreator")
+  mentorships     Mentorship[]           @relation("Mentor")
+  menteeRelations Mentorship[]           @relation("Mentee")
+  challenges      Challenge[]            @relation("ChallengeCreator")
+  challengeRegistrations ChallengeRegistration[]
+  fdpPrograms     FDPProgram[]           @relation("FDPOrganizer")
+  fdpRegistrations FDPRegistration[]
+  researchProjects ResearchProject[]     @relation("ResearchPI")
+  researchPartners ResearchProject[]     @relation("ResearchPartner")
+}
+
+model UserSkill {
+  id        String @id @default(cuid())
+  userId    String
+  skillName String
+  score     Int
+  category  String?
+  level     String?
+  user      User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, skillName])
+}
+
+model Assessment {
+  id        String @id @default(cuid())
+  userId    String
+  type      String // technical, soft, aptitude
+  score     Int
+  correct   Int
+  total     Int
+  answers   Json?
+  createdAt DateTime @default(now())
+  user      User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model Opportunity {
+  id          String @id @default(cuid())
+  creatorId   String
+  title       String
+  type        OpportunityType
+  company     String
+  location    String
+  duration    String
+  stipend     String
+  skills      String[]
+  requirements String?
+  description String
+  deadline    DateTime
+  spots       Int
+  applied     Int     @default(0)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  creator     User    @relation("OppCreator", fields: [creatorId], references: [id])
+  applications Application[]
+}
+
+model Application {
+  id           String @id @default(cuid())
+  studentId    String
+  opportunityId String
+  status       ApplicationStatus @default(pending)
+  coverLetter  String?
+  resumeUrl    String?
+  appliedAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+  student      User       @relation(fields: [studentId], references: [id], onDelete: Cascade)
+  opportunity  Opportunity @relation(fields: [opportunityId], references: [id], onDelete: Cascade)
+
+  @@unique([studentId, opportunityId])
+}
+
+model Document {
+  id        String @id @default(cuid())
+  userId    String
+  name      String
+  type      DocumentType
+  filePath  String
+  fileSize  Int
+  mimeType  String?
+  verified  Boolean @default(false)
+  uploadedAt DateTime @default(now())
+  user      User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model CollabEvent {
+  id          String @id @default(cuid())
+  hostId      String
+  title       String
+  type        EventType
+  description String
+  date        DateTime
+  time        String
+  mode        EventMode
+  speaker     String?
+  capacity    Int
+  registered  Int     @default(0)
+  createdAt   DateTime @default(now())
+  host        User    @relation("EventHost", fields: [hostId], references: [id])
+  registrations EventRegistration[]
+}
+
+model EventRegistration {
+  id       String @id @default(cuid())
+  eventId  String
+  userId   String
+  registeredAt DateTime @default(now())
+  event    CollabEvent @relation(fields: [eventId], references: [id], onDelete: Cascade)
+  user     User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([eventId, userId])
+}
+
+model LearningProgram {
+  id          String @id @default(cuid())
+  creatorId   String
+  title       String
+  company     String
+  type        ProgramType
+  duration    String
+  mode        String
+  skills      String[]
+  price       String
+  rating      Float   @default(0)
+  enrolled    Int     @default(0)
+  description String
+  deadline    DateTime
+  instructor  String?
+  createdAt   DateTime @default(now())
+  creator     User    @relation("ProgramCreator", fields: [creatorId], references: [id])
+}
+
+model Challenge {
+  id          String @id @default(cuid())
+  creatorId   String
+  title       String
+  type        String
+  description String
+  prize       String
+  deadline    DateTime
+  registered  Int     @default(0)
+  teamSize    Int
+  status      ChallengeStatus @default(upcoming)
+  skills      String[]
+  createdAt   DateTime @default(now())
+  creator     User    @relation("ChallengeCreator", fields: [creatorId], references: [id])
+  registrations ChallengeRegistration[]
+}
+
+model ChallengeRegistration {
+  id          String @id @default(cuid())
+  challengeId String
+  userId      String
+  teamName    String?
+  registeredAt DateTime @default(now())
+  challenge   Challenge @relation(fields: [challengeId], references: [id], onDelete: Cascade)
+  user        User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([challengeId, userId])
+}
+
+model Mentorship {
+  id          String @id @default(cuid())
+  mentorId    String
+  menteeId    String
+  topic       String
+  status      String @default("pending") // pending, active, completed
+  notes       String?
+  createdAt   DateTime @default(now())
+  mentor      User   @relation("Mentor", fields: [mentorId], references: [id])
+  mentee      User   @relation("Mentee", fields: [menteeId], references: [id])
+}
+
+model FDPProgram {
+  id          String @id @default(cuid())
+  organizerId String
+  title       String
+  org         String
+  duration    String
+  mode        String
+  description String
+  status      FDPStatus @default(upcoming)
+  deadline    DateTime
+  spots       Int
+  registered  Int     @default(0)
+  createdAt   DateTime @default(now())
+  organizer   User    @relation("FDPOrganizer", fields: [organizerId], references: [id])
+  registrations FDPRegistration[]
+}
+
+model FDPRegistration {
+  id      String @id @default(cuid())
+  fdpId   String
+  userId  String
+  registeredAt DateTime @default(now())
+  fdp     FDPProgram @relation(fields: [fdpId], references: [id], onDelete: Cascade)
+  user    User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([fdpId, userId])
+}
+
+model ResearchProject {
+  id          String @id @default(cuid())
+  piId        String
+  partnerId   String?
+  title       String
+  description String
+  budget      String
+  duration    String
+  status      String @default("proposed") // proposed, ongoing, completed
+  createdAt   DateTime @default(now())
+  pi          User    @relation("ResearchPI", fields: [piId], references: [id])
+  partner     User?   @relation("ResearchPartner", fields: [partnerId], references: [id])
+}
