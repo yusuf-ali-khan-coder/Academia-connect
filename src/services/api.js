@@ -1,4 +1,10 @@
-const BASE = import.meta.env.VITE_API_URL || 'http://localhost:3001/api';
+const defaultApiUrl = import.meta.env.DEV
+  ? 'http://localhost:3001/api'
+  : 'https://academia-connect-backend-5t19.onrender.com/api';
+
+const rawUrl = (import.meta.env.VITE_API_URL || defaultApiUrl).trim();
+const trimmedUrl = rawUrl.replace(/\/+$/, '');
+const BASE = trimmedUrl.endsWith('/api') ? trimmedUrl : `${trimmedUrl}/api`;
 
 let accessToken = null;
 let refreshToken = null;
