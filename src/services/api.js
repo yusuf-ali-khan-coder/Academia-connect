@@ -2,7 +2,24 @@ const defaultApiUrl = import.meta.env.DEV
   ? 'http://localhost:3001/api'
   : 'https://academia-connect-backend-5t19.onrender.com/api';
 
-const rawUrl = (import.meta.env.VITE_API_URL || defaultApiUrl).trim();
+let rawUrl = (import.meta.env.VITE_API_URL || defaultApiUrl).trim();
+
+// Strip surrounding quotes if present
+rawUrl = rawUrl.replace(/^["']|["']$/g, '').trim();
+
+// Automatically strip accidental 'VITE_API_URL=' prefix if user entered 'KEY=VALUE' in Vercel
+if (rawUrl.startsWith('VITE_API_URL=')) {
+  rawUrl = rawUrl.substring('VITE_API_URL='.length).trim();
+}
+
+// Strip surrounding quotes again if inner was quoted
+rawUrl = rawUrl.replace(/^["']|["']$/g, '').trim();
+
+// If empty or does not start with http/https, fall back to default production backend
+if (!rawUrl || (!rawUrl.startsWith('http://') && !rawUrl.startsWith('https://'))) {
+  rawUrl = defaultApiUrl;
+}
+
 const trimmedUrl = rawUrl.replace(/\/+$/, '');
 const BASE = trimmedUrl.endsWith('/api') ? trimmedUrl : `${trimmedUrl}/api`;
 
@@ -48,8 +65,19 @@ async function request(endpoint, options = {}) {
   }
 
   if (!res.ok) {
-    const err = await res.json().catch(() => ({ error: 'Request failed' }));
-    throw new Error(err.error || `HTTP ${res.status}`);
+    let errMsg = `HTTP ${res.status}`;
+    try {
+      const err = await res.json();
+      errMsg = err.error || err.message || errMsg;
+    } catch {
+      try {
+        const text = await res.text();
+        if (text && text.length < 150 && !text.includes('<html') && !text.includes('<!DOCTYPE')) {
+          errMsg = text;
+        }
+      } catch {}
+    }
+    throw new Error(errMsg);
   }
   return res.json();
 }

@@ -14,6 +14,7 @@ import programRoutes from './routes/programs.js';
 import challengeRoutes from './routes/challenges.js';
 
 const app = express();
+app.set('trust proxy', 1);
 const prisma = new PrismaClient();
 const PORT = process.env.PORT || 3001;
 
