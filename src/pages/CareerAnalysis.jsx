@@ -212,7 +212,7 @@ const CareerAnalysis = () => {
 
 function getLevelValue(level) {
   const values = { beginner: 1, intermediate: 2, advanced: 3, expert: 4 }
-  return values[level] || 0
+  return level ? (values[level.toLowerCase()] || 0) : 0
 }
 
 function getLevelLabel(value) {
